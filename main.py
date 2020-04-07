@@ -38,8 +38,9 @@ def output_calc_value():
         send_data = {
             "value": money_amount[0]
         }
-
-    return jsonify(send_data)
+        response = jsonify(send_data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 
 app.run(port=5000)
