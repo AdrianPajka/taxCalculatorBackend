@@ -1,13 +1,17 @@
 from flask import Flask, jsonify, request, Response
 from tax_calculator import Calculator
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 
-def valid_data(object):
-    return True if "value" in object else False
+def valid_data(obj):
+    return True if "value" in obj else False
 
 
 money_amount = [];
+
 
 @app.route("/value", methods=["POST"])
 def input_calc_value():
@@ -33,14 +37,13 @@ def input_calc_value():
 @app.route("/value")
 def output_calc_value():
     if len(money_amount) == 0:
-        send_data ={}
+        send_data = {}
     else:
         send_data = {
             "value": money_amount[0]
         }
-        response = jsonify(send_data)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
+    response = jsonify(send_data)
+    return response
 
 
 app.run(port=5000)
